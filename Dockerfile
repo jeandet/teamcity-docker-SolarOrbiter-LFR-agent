@@ -1,7 +1,7 @@
 FROM jeandet/teamcity-docker-minimal-agent
 LABEL maintainer "Alexis Jeandet <alexis.jeandet@member.fsf.org>"
 
-RUN dnf install -y git cppcheck bzip2 hg automake autoconf gcc glibc.i686 zlib.i686 ncurses-compat-libs.i686 cmake
+RUN dnf install -y git cppcheck bzip2 hg automake autoconf gcc glibc.i686 zlib.i686 ncurses-compat-libs.i686 cmake gcc-c++ tcl
 
 ADD http://www.gaisler.com/anonftp/rcc/bin/linux/sparc-rtems-4.10-gcc-4.4.6-1.2.20c-linux.tar.bz2 /opt/
 ADD http://www.gaisler.com/anonftp/rcc/src/rtems-4.10-1.2.20c-src.tar.bz2 /opt/
