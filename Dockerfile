@@ -19,7 +19,8 @@ RUN cd /opt && tar -xf /opt/sparc-rtems-4.10-gcc-4.4.6-1.2.20c-linux.tar.bz2 && 
 
 
 
-RUN echo "system.has_sparc_rtems_for_lfr=true" >> /opt/buildagent/conf/buildAgent.dist.properties && \
+RUN echo "" >> /opt/buildagent/conf/buildAgent.dist.properties && \
+    echo "system.has_sparc_rtems_for_lfr=true" >> /opt/buildagent/conf/buildAgent.dist.properties && \
     echo "system.has_cppcheck=true" >> /opt/buildagent/conf/buildAgent.dist.properties
 
 
