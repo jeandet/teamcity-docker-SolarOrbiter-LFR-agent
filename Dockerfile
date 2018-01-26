@@ -22,7 +22,9 @@ RUN cd /opt && tar -xf /opt/sparc-rtems-4.10-gcc-4.4.6-1.2.21-linux.tar.bz2 && \
 RUN echo "" >> /opt/buildagent/conf/buildAgent.dist.properties && \
     echo "system.has_sparc_rtems_for_lfr=true" >> /opt/buildagent/conf/buildAgent.dist.properties && \
     echo "system.has_cppcheck=true" >> /opt/buildagent/conf/buildAgent.dist.properties && \
-    echo "system.rtems_version=4.10-gcc-4.4.6-1.2.21" >> /opt/buildagent/conf/buildAgent.dist.properties
+    echo "system.rtems_version=4.10-gcc-4.4.6-1.2.21" >> /opt/buildagent/conf/buildAgent.dist.properties && \
+    echo "system.agent_name=SolarOrbiter-LFR-agent" >> /opt/buildagent/conf/buildAgent.dist.properties  && \
+    echo "system.agent_repo=https://github.com/jeandet/teamcity-docker-SolarOrbiter-LFR-agent" >> /opt/buildagent/conf/buildAgent.dist.properties
 
 
 CMD ["/run-services.sh"]
