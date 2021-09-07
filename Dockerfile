@@ -1,10 +1,17 @@
-FROM fedora:33
+FROM centos:8
 LABEL maintainer "Alexis Jeandet <alexis.jeandet@member.fsf.org>"
 
-RUN dnf install -y git cppcheck bzip2 hg automake autoconf gcc glibc.i686 zlib.i686 ncurses-compat-libs.i686 cmake gcc-c++ tcl
 
-ADD http://www.gaisler.com/anonftp/rcc/bin/linux/sparc-rtems-4.10-gcc-4.4.6-1.2.25-linux.tar.bz2 /opt/
-ADD http://www.gaisler.com/anonftp/rcc/src/rtems-4.10-1.2.25-src.tar.bz2 /opt/
+RUN dnf install -y --nogpgcheck https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm \
+        && dnf install -y  --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-8.noarch.rpm\
+        && dnf install -y 'dnf-command(config-manager)' \
+        && dnf config-manager --enable powertools \
+        && dnf install -y --nodocs --setopt install_weak_deps=False https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm git cppcheck bzip2 hg automake autoconf gcc glibc.i686 /lib/ld-linux.so.2 zlib.i686 ncurses-compat-libs.i686 cmake gcc-c++ tcl /bin/find xz make\
+        && dnf clean all -y
+
+
+ADD https://hephaistos.lpp.polytechnique.fr/data/mirrors/gaisler/rcc/bin/linux/sparc-rtems-4.10-gcc-4.4.6-1.2.25-linux.tar.bz2 /opt/
+ADD https://hephaistos.lpp.polytechnique.fr/data/mirrors/gaisler/rcc/src/rtems-4.10-1.2.25-src.tar.bz2 /opt/
 
 RUN cd /opt && tar -xf /opt/sparc-rtems-4.10-gcc-4.4.6-1.2.25-linux.tar.bz2 && \
     cd /opt/rtems-4.10/src && tar -xf /opt/rtems-4.10-1.2.25-src.tar.bz2 && \
