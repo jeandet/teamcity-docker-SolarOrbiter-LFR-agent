@@ -15,7 +15,12 @@ ADD https://hephaistos.lpp.polytechnique.fr/data/mirrors/gaisler/rcc/src/rtems-4
 
 RUN cd /opt && tar -xf /opt/sparc-rtems-4.10-gcc-4.4.6-1.2.25-linux.tar.bz2 && \
     cd /opt/rtems-4.10/src && tar -xf /opt/rtems-4.10-1.2.25-src.tar.bz2 && \
-     sed -i '0,/grspw_hw_reset(pDev);/s/grspw_hw_reset(pDev);/\/\/grspw_hw_reset(pDev);/' /opt/rtems-4.10/src/rtems-4.10/c/src/lib/libbsp/sparc/shared/spw/grspw.c && \
+    sed -i '0,/grspw_hw_reset(pDev);/s/grspw_hw_reset(pDev);/\/\/grspw_hw_reset(pDev);/' /opt/rtems-4.10/src/rtems-4.10/c/src/lib/libbsp/sparc/shared/spw/grspw.c && \
+    /opt/rtems-4.10/bin/sparc-rtems-gcc -v && \
+    /opt/rtems-4.10/bin/sparc-rtems-ld -v && \
+    /opt/rtems-4.10/bin/sparc-rtems-g++ -v && \
+    /opt/rtems-4.10/bin/sparc-rtems-ar -v && \
+    /opt/rtems-4.10/bin/sparc-rtems-objdump -v && \
     make -j bootstrap && \
     make -j bootstrap_sparc && \
     make -j configure-drvmgr && \
