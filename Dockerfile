@@ -6,8 +6,9 @@ RUN dnf install -y --nogpgcheck https://dl.fedoraproject.org/pub/epel/epel-relea
         && dnf install -y  --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-8.noarch.rpm\
         && dnf install -y 'dnf-command(config-manager)' \
         && dnf config-manager --enable powertools \
-        && dnf install -y --nodocs --setopt install_weak_deps=False https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm git cppcheck bzip2 hg automake autoconf gcc glibc.i686 /lib/ld-linux.so.2 zlib.i686 ncurses-compat-libs.i686 cmake gcc-c++ tcl /bin/find xz make\
-        && dnf clean all -y
+        && dnf install -y --nodocs --setopt install_weak_deps=False https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm git cppcheck bzip2 hg automake autoconf gcc glibc.i686 /lib/ld-linux.so.2 zlib.i686 ncurses-compat-libs.i686 cmake gcc-c++ tcl /bin/find xz make python3-pip \
+        && pip3 install meson ninja \
+	&& dnf clean all -y
 
 
 ADD https://hephaistos.lpp.polytechnique.fr/data/mirrors/gaisler/rcc/bin/linux/sparc-rtems-4.10-gcc-4.4.6-1.2.25-linux.tar.bz2 /opt/
