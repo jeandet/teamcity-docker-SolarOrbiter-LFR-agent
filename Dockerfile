@@ -7,7 +7,7 @@ RUN dnf install -y --nogpgcheck https://dl.fedoraproject.org/pub/epel/epel-relea
         && dnf install -y 'dnf-command(config-manager)' \
         && dnf config-manager --enable powertools \
         && dnf install -y --nodocs --setopt install_weak_deps=False https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm git cppcheck bzip2 hg automake autoconf gcc glibc.i686 /lib/ld-linux.so.2 zlib.i686 ncurses-compat-libs.i686 cmake gcc-c++ tcl /bin/find xz make python3-pip python3-devel \
-        && pip3 install meson ninja \
+        && pip3 install meson ninja numpy \
 	&& dnf clean all -y
 
 
