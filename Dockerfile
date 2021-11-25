@@ -6,7 +6,7 @@ RUN dnf install -y --nogpgcheck https://dl.fedoraproject.org/pub/epel/epel-relea
         && dnf install -y  --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-8.noarch.rpm\
         && dnf install -y 'dnf-command(config-manager)' \
         && dnf config-manager --enable powertools \
-        && dnf install -y --nodocs --setopt install_weak_deps=False https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm git cppcheck bzip2 hg automake autoconf gcc glibc.i686 /lib/ld-linux.so.2 zlib.i686 ncurses-compat-libs.i686 cmake gcc-c++ tcl /bin/find xz make python3-pip python3-devel \
+        && dnf install -y --nodocs --setopt install_weak_deps=False unzip https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm git cppcheck bzip2 hg automake autoconf gcc glibc.i686 /lib/ld-linux.so.2 zlib.i686 ncurses-compat-libs.i686 cmake gcc-c++ tcl /bin/find xz make python3-pip python3-devel \
         && pip3 install meson ninja numpy ddt \
 	&& dnf clean all -y
 
@@ -17,7 +17,9 @@ ADD https://www.mjr19.org.uk/sw/inode64.so /usr/lib/
 
 RUN g++ -shared -Wl,-soname -o  /usr/lib64/inode64.so && ldconfig -v 
 
-ENV LD_PRELOAD=inode64.so
+ENV LD_PRELOAD=inode64.so 
+ENV SONAR_SERVER_URL="https://sonarcloud.io"
+ENV PATH="/root/.sonar/sonar-scanner-4.4.0.2170-linux/bin/:/root/.sonar/build-wrapper-linux-x86/:${PATH}"
 
 RUN cd /opt && tar -xf /opt/sparc-rtems-4.10-gcc-4.4.6-1.2.25-linux.tar.bz2 && \
     cd /opt/rtems-4.10/src && tar -xf /opt/rtems-4.10-1.2.25-src.tar.bz2 && \
@@ -34,4 +36,11 @@ RUN cd /opt && tar -xf /opt/sparc-rtems-4.10-gcc-4.4.6-1.2.25-linux.tar.bz2 && \
     rm -f /opt/sparc-rtems-4.10-gcc-4.4.6-1.2.25-linux.tar.bz2 /opt/rtems-4.10-1.2.25-src.tar.bz2
 
 
+RUN mkdir -p $HOME/.sonar
 
+ADD https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.4.0.2170-linux.zip /root/.sonar/
+ADD https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip /root/.sonar/
+
+RUN unzip -o $HOME/.sonar/sonar-scanner-cli-4.4.0.2170-linux.zip -d $HOME/.sonar/ && \
+    unzip -o $HOME/.sonar/build-wrapper-linux-x86.zip -d $HOME/.sonar/ && \
+    rm -f $HOME/.sonar/*.zip
